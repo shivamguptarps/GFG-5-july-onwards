@@ -34,15 +34,16 @@ class Solution
     //Function to find the next greater element for each element of the array.
     public static long[] nextLargerElement(long[] arr, int n)
     { 
-        Stack<Long> st = new Stack<>();
+        Stack<Integer> st = new Stack<>();
         long ans[]=new long[n];
-        for(int i=n-1;i>=0;i--){
-            while(!st.isEmpty() && st.peek()<=arr[i]) st.pop();
+        for(int i=0;i<n;i++){
+            while(!st.isEmpty() && arr[st.peek()]<arr[i]){
+              ans[st.pop()]=arr[i];  
+            } 
             
-            ans[i]=!st.isEmpty() ? st.peek() : -1;
-            
-            st.push(arr[i]);
+            st.push(i);
         }
+        while(!st.isEmpty()) ans[st.pop()]=-1;
         return ans;
     } 
 }
