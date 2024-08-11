@@ -29,20 +29,22 @@ class GFG {
 class Solution {
     // Function to find if there is a celebrity in the party or not.
     public int celebrity(int mat[][]) {
+        int top=0;
+        int down=mat.length-1;
+        
+        while(top<down){
+            if(mat[top][down]==1) top++;
+            else if(mat[down][top]==1) down--;
+            // this is else case
+            else if(mat[top][down]==0 && mat[down][top]==0) {top++;down--;} 
+        }
+        if(top<down) return -1;
+        
         for(int i=0;i<mat.length;i++){
-            boolean flag=false;
-            for(int j=0;j<mat[0].length;j++){
-                if(mat[i][j]==1){
-                  flag=true;
-                  break;
-                } 
-                if(mat[i][j]==0 && mat[j][i] ==0&& i!=j) {
-                    flag=true;
-                    break;
-                }
-            }
-            if(!flag) return i;
-            }
-            return -1;
+            if(top==i) continue;
+            if(mat[top][i]!=0) return -1;
+            if(mat[i][top]!=1) return -1;
+        }
+        return top;
     }
 }
