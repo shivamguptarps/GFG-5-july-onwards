@@ -50,19 +50,12 @@ class Compute {
         Queue<Integer> dq= new LinkedList<>();
             long ans[]=new long[nums.length-k+1];
 
-            for(int i=0;i<k;i++){
-                if(nums[i]<0)
-                dq.add(i);
-            }
-            if(!dq.isEmpty())
-            ans[0]=nums[dq.peek()];
-
-            for(int i=k;i<nums.length;i++){
+            for(int i=0;i<nums.length;i++){
             if(!dq.isEmpty() && dq.peek()<=i-k) dq.remove();
             // while(!dq.isEmpty() && nums[dq.peekLast()]<=nums[i]) dq.removeLast();
             if(nums[i]<0)
             dq.add(i);
-            if(!dq.isEmpty())
+            if(!dq.isEmpty() && i-k+1>=0)
             ans[i-k+1]=nums[dq.peek()];
 
             }
