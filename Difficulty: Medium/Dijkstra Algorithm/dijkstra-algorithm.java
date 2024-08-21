@@ -52,6 +52,8 @@ class DriverClass
 // } Driver Code Ends
 
 
+
+
 //User function Template for Java
 
 
@@ -65,7 +67,7 @@ class Solution
     }
     static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int src)
     {
-        PriorityQueue<Pair> pq = new PriorityQueue<>((x,y)->x.dist-y.dist);
+        Queue<Pair> pq = new LinkedList<>();
         
         int dist[]=new int[V];
         Arrays.fill(dist,Integer.MAX_VALUE);
@@ -74,6 +76,8 @@ class Solution
         pq.add(new Pair(src,0));
         
         while(!pq.isEmpty()){
+            // for(Pair it : pq) System.out.print(it.node+" ");
+            // System.out.println();
             Pair p=pq.remove();
             int node=p.node;
             
@@ -86,6 +90,7 @@ class Solution
                     dist[v]=dist[u]+wt;
                     pq.add(new Pair(v,dist[v]));
                 }
+            
             }
         }
         return dist;
