@@ -52,30 +52,44 @@ class GFG {
 //User function Template for Java
 
 class Solution {
-     public List<List<String>> Anagrams(String[] string_list) {
-        HashMap<String,List<String>> map=new HashMap<>();
-        List<List<String>> res=new ArrayList<>();
-        for (String s:string_list){
-            char[] temp=s.toCharArray();
-            Arrays.sort(temp);
-            String str=new String(temp);
-            if (!map.containsKey(str)){
-                List<String> tempArr=new ArrayList<>();
-                tempArr.add(s);
-                map.put(str,tempArr);
-            }
-            else{
-                 List<String> tempArr=map.get(str);
-                 tempArr.add(s);
-                 map.put(str,tempArr);
-
-            }
-            
-       }
-        for (Map.Entry<String,List<String>> entry:map.entrySet()){
-            List<String> t1=entry.getValue();
-            res.add(t1);
+    private String solve(String s){
+        int freq[]=new int[26];
+        for(int i=0;i<s.length();i++){
+            freq[s.charAt(i)-'a']++;
         }
-        return res;
+
+        StringBuilder sb = new StringBuilder();
+
+        for(int i=0;i<26;i++){
+            if(freq[i]>0){
+                sb.append(((char)(i+'a')));
+                sb.append(freq[i]);
+            }
+        }
+        return sb.toString();
+    }
+     public List<List<String>> Anagrams(String[] strs) {
+        List<List<String>> arl = new ArrayList<>();
+
+        HashMap<String,List<String>> hm = new HashMap<>();
+
+        for(int i=0;i<strs.length;i++){
+            String temp=solve(strs[i]);
+            if(!hm.containsKey(temp)){
+                hm.put(temp,new ArrayList<>());
+            }
+                hm.get(temp).add(strs[i]);
+            // else{
+            // }
+        }
+        for(List<String> l1 : hm.values()){
+            // arl.add(new ArrayList<>());
+            // for(int i=0;i<hm.get(s).size();i++){
+            //     arl.get(arl.size()-1).add(hm.get(s).get(i));
+            // }
+            arl.add(l1);
+        }
+
+        return arl; 
     }
 }
