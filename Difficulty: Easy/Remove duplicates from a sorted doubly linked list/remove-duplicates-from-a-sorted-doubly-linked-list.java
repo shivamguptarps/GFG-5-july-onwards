@@ -78,14 +78,14 @@ class Solution{
         Node dummy=new Node(-1);
         Node returnn=dummy;
         while(head!=null){
-            if(head.next!=null && head.data==head.next.data){
+            while(head.next!=null && head.data==head.next.data){
                 head=head.next;
             }
-            else{ dummy.next=head;
-                head.prev=dummy;
-                head=head.next;
-                dummy=dummy.next;
-            }
+            dummy.next=head;
+            head.prev=dummy;
+            head=head.next;
+            dummy=dummy.next;
+            
         }
         returnn.next.prev=null;
         return returnn.next;
