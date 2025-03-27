@@ -1,19 +1,18 @@
 //{ Driver Code Starts
 // Initial Template for Java
-import java.util.*;
-import java.lang.*;
 import java.io.*;
+import java.lang.*;
+import java.util.*;
+
 class GFG {
     public static void main(String[] args) throws IOException {
-        BufferedReader br =
-            new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int T = Integer.parseInt(br.readLine().trim());
         while (T-- > 0) {
             String[] s = br.readLine().trim().split(" ");
             int V = Integer.parseInt(s[0]);
             int E = Integer.parseInt(s[1]);
-            ArrayList<ArrayList<Integer>> adj =
-                new ArrayList<ArrayList<Integer>>();
+            ArrayList<ArrayList<Integer>> adj = new ArrayList<ArrayList<Integer>>();
             for (int i = 0; i < V; i++) adj.add(new ArrayList<Integer>());
             for (int i = 0; i < E; i++) {
                 String[] S = br.readLine().trim().split(" ");
@@ -23,10 +22,11 @@ class GFG {
                 adj.get(v).add(u);
             }
             Solution obj = new Solution();
-            ArrayList<Integer> ans = obj.dfsOfGraph(V, adj);
-            for (int i = 0; i < ans.size(); i++)
-                System.out.print(ans.get(i) + " ");
+            ArrayList<Integer> ans = obj.dfsOfGraph(adj);
+            for (int i = 0; i < ans.size(); i++) System.out.print(ans.get(i) + " ");
             System.out.println();
+
+            System.out.println("~");
         }
     }
 }
@@ -36,23 +36,17 @@ class GFG {
 
 class Solution {
     // Function to return a list containing the DFS traversal of the graph.
-    
-    static void dfs(int curr, ArrayList<ArrayList<Integer>> adj,ArrayList<Integer> arl,boolean vis[]){
-        arl.add(curr);
-        vis[curr]=true;
-        for(int i=0;i<adj.get(curr).size();i++){
-            if(!vis[adj.get(curr).get(i)]){
-                dfs(adj.get(curr).get(i),adj,arl,vis);
-            }
+    void dfs(ArrayList<ArrayList<Integer>> adj,ArrayList<Integer> ans,int s,Set<Integer> hs){
+        ans.add(s);
+        hs.add(s);
+        for(int it : adj.get(s)){
+            if(!hs.contains(it)) dfs(adj,ans,it,hs);
         }
     }
-    
-    public ArrayList<Integer> dfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj) {
-        
-        boolean vis[]=new boolean[V];
-        ArrayList<Integer> arl = new ArrayList<>();
-        
-        dfs(0,adj,arl,vis);
-        return arl;
+    public ArrayList<Integer> dfsOfGraph(ArrayList<ArrayList<Integer>> adj) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        Set<Integer> hs = new HashSet<>();
+        dfs(adj,ans,0,hs);
+        return ans;
     }
 }
